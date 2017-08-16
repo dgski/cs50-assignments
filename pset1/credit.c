@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 //Function Determines Card Type
 char*  CardType(int length, char* input){
@@ -19,7 +20,6 @@ char*  CardType(int length, char* input){
 		return "INVALID\n";
 
 }
-
 
 //Main Function
 int main(void){
@@ -57,18 +57,29 @@ int main(void){
 	
 
 	//Determine validity
-	printf("Determining validity!\n");
+	printf("Determining validity...\n");
 
 
 	//Sum of start at second last one times 2
 	long long sum1 = 0;
 
+		
+	char* doubled = malloc(20);	
+	//For loop to iterate over original input string
 	for(int i = length - 2; i>=0; i = i - 2)
 	{
-		sum1 += (input[i] - '0') * 2;	
-		printf("%c ", input[i]);
+		
+		char* data  = malloc(2);
+		sprintf(data,"%i",(input[i] -'0') *2);
+		strcat(doubled, data);
+
 	}
+
+	for(int i = 0; i < strlen(doubled); i++)
+		sum1 += doubled[i] - '0';
 	printf("\nSum1: %lld\n", sum1);
+
+
 
 	//Sum of starting at last one
 	long long  sum2 = 0;
@@ -87,10 +98,5 @@ int main(void){
 	else
 		printf("NOPE");
 
-
-	printf("Long Long: %lld\n", number);
-	printf("%s", input);
-	printf("%d",length);
 	printf("\n");
-
 }
