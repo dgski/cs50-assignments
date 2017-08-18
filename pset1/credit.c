@@ -10,15 +10,14 @@ char*  CardType(long long totalsum, char* input){
 	//Determine length
 	int length = strlen(input) - 1;
 
-	//Algorithm doesnt work
+	//Algorithm determines invalid
 	if(totalsum % 10 != 0)
 		return "INVALID\n";
-
 	//Visa
 	if((length == 16 || length == 13) && input[0] == '4')
 		return "VISA\n";
 	//Mastercard
-	else if(length == 16 && input[0] == '5' && (input[1] > 0 && input[1] < 6))
+	else if(length == 16 && input[0] == '5' && (input[1] > '0' && input[1] < '6'))
 		return "MASTERCARD\n";
 	//AMEX
 	else if(length == 15 && input[0]== '3' && (input[1] == '4' || input[1] == '7'))
