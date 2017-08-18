@@ -2,18 +2,26 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <ctype.h>
 
 //Function Determines Card Type
-char*  CardType(int length, char* input){
+char*  CardType(long long totalsum, char* input){
+
+	//Determine length
+	int length = strlen(input) - 1;
+
+	//Algorithm doesnt work
+	if(totalsum % 10 != 0)
+		return "INVALID\n";
 
 	//Visa
 	if((length == 16 || length == 13) && input[0] == '4')
 		return "VISA\n";
 	//Mastercard
-	else if(length == 16)
+	else if(length == 16 && input[0] == '5' && (input[1] > 0 && input[1] < 6))
 		return "MASTERCARD\n";
 	//AMEX
-	else if(length == 15)
+	else if(length == 15 && input[0]== '3' && (input[1] == '4' || input[1] == '7'))
 		return "AMEX\n";
 	//INVALID
 	else
@@ -21,82 +29,70 @@ char*  CardType(int length, char* input){
 
 }
 
-//Main Function
-int main(void){
-	
+//Function that uses Lugn's Algorithm on a number
+long long LugnsAlgo(char* input){
 
-	//Variable declaration
-	char* input = malloc(20);
-	int length;
-	char* type = malloc(10);	
-
-
-	//User number input
-	printf("Please enter your credit card number (Research Purposes, we swear ;):");
-	while(1)
-	{
-		fgets(input, 20, stdin);
-		length = strlen(input) - 1;
-
-		if(length == 13 || length == 15 || length == 16)
-			break;
-
-		printf("Please enter a valid credit card number:");
-
-	}
-
-	//Determine type of card
-	//TEMPORARY -DOES NOT DETERMINE
-	type = CardType(length, input);
-	printf("Type: %s",type);
-
-
-	//Convert into longlong
-	long long number = atoll(input);
-
-	
-
-	//Determine validity
-	printf("Determining validity...\n");
-
+	//Determine length
+	int length = strlen(input) - 1;
 
 	//Sum of start at second last one times 2
 	long long sum1 = 0;
-
-		
 	char* doubled = malloc(20);	
 	//For loop to iterate over original input string
 	for(int i = length - 2; i>=0; i = i - 2)
 	{
-		
 		char* data  = malloc(2);
 		sprintf(data,"%i",(input[i] -'0') *2);
 		strcat(doubled, data);
-
 	}
-
 	for(int i = 0; i < strlen(doubled); i++)
 		sum1 += doubled[i] - '0';
-	printf("\nSum1: %lld\n", sum1);
-
-
 
 	//Sum of starting at last one
 	long long  sum2 = 0;
 	for(int i = length - 1; i >= 0; i = i - 2)
 	{	
-		printf("%c ",input[i]);	
 		sum2 += (input[i] -  '0');
 	}
-	printf("\nSum2: %lld\n", sum2);
 
+	return sum1 + sum2;
+}
 
-	long long totalsum = sum1 + sum2;
-	printf("TOTALSUM: %lld\n", totalsum);
-	if(totalsum % 10 == 0)
-		printf("VALID CARD");
-	else
-		printf("NOPE");
+//Function that checks if the string has any letters
+int OnlyNumbers(const char *input){
 
-	printf("\n");
+	//Determine length
+	int length = strlen(input) - 1;
+
+	for(int i = 0; i < length; i++)
+		{
+			if(isdigit(input[i]))
+				continue;
+			else
+				return 1;
+		}
+	return 0;
+}
+
+//Main Function
+int main(void){
+
+	//Variable declaration
+	char* input = malloc(20);
+
+	//User number input
+	printf("Number, please:");
+	while(1)
+	{
+		fgets(input, 20, stdin);
+		int length = strlen(input) - 1;
+		int DigitPresent = OnlyNumbers(input);
+		if(!DigitPresent && length > 0)
+			break;
+		printf("Retry:");
+	}
+
+	long long totalsum = LugnsAlgo(input);
+	printf("%s",CardType(totalsum, input));
+
 }
