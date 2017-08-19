@@ -43,6 +43,7 @@ long long LugnsAlgo(char* input){
 		char* data  = malloc(2);
 		sprintf(data,"%i",(input[i] -'0') *2);
 		strcat(doubled, data);
+		free(data);
 	}
 	for(int i = 0; i < strlen(doubled); i++)
 		sum1 += doubled[i] - '0';
@@ -53,7 +54,8 @@ long long LugnsAlgo(char* input){
 	{	
 		sum2 += (input[i] -  '0');
 	}
-
+	
+	free(doubled);
 	return sum1 + sum2;
 }
 
@@ -93,5 +95,8 @@ int main(void){
 
 	long long totalsum = LugnsAlgo(input);
 	printf("%s",CardType(totalsum, input));
+
+	free(input);
+	return 0;
 
 }
