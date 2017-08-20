@@ -23,85 +23,8 @@ int main(int argc, char * argv[]){
 	salt[0] = hash[0]; // Take salt from has string (first two characters)
 	salt[1] = hash[1];
 
-	printf("%s\n\n", salt);
-	
 
-
-
-	/*
-	printf("1 CHARACTER\n");
-	for(int a = 'A'; a < 91; a++)
-	{
-
-		pass[0] = a;	
-		printf("%s\n", pass);
-
-
-	}
-	
-
-	printf("2 CHARACTERS\n");
-	for(int a = 'A'; a < 91; a++)
-	{
-		for(int b = 'A'; b < 91; b++)
-		{
-
-			pass[0] = a;	
-			pass[1] = b;
-
-			printf("%s\n", pass);
-
-
-		}
-	}
-
-
-	printf("3 CHARACTERS\n");
-	for(int a = 'A'; a < 91; a++)
-	{
-		for(int b = 'A'; b < 91; b++)
-		{
-			for(int c = 'A'; c < 91; c++)
-			{
-
-				pass[0] = a;	
-				pass[2] = b;
-				pass[1] = c;	
-
-				printf("%s\n", pass);
-
-
-			}
-		}
-	}
-	
-
-	printf("4 CHARACTERS\n");
-	for(int a = 'A'; a < 91; a++)
-	{
-		for(int b = 'A'; b < 91; b++)
-		{
-			for(int c = 'A'; c < 91; c++)
-			{
-				for(int d = 'A'; d < 91; d++)
-				{
-
-					pass[0] = a;	
-					pass[3] = b;
-					pass[2] = c;	
-					pass[1]=  d;
-
-					printf("%s\n", pass);
-
-
-				}
-			}
-		}
-	}
-	*/
-
-	
-	printf("4 CHARACTERS\n");
+	//Simple phrase generator - not super effiecient - doesnt skip character in between lowercase and uppercase
 	for(int a = 'A'; a < 'z' + 1; a++)
 	{
 		for(int b = 64; b < 'z' + 1; b++)
@@ -125,41 +48,21 @@ int main(int argc, char * argv[]){
 						pass[3] = (char) 0; 
 					else
 						pass[3]=  b;
-
-					printf("%s\n", pass);
 					
-					printf("G.HASH: %s\n", hash);
-					printf("U.HASH: %s\n", crypt(pass,salt));
-									
 					//If given hash matches generated hash
-					if (hash == crypt(pass,salt))
+					if (!strcmp(hash, crypt(pass,salt)))
 					{
-						printf("YOUR PASSWORD!");
+						printf("%s\n", pass);
+						free(pass);
 						return 0;
 					}
-	
-
-
-
 				}
 			}
 		}
 	}
 
-
-
-
-	//If given hash matches generated hash
-	if (hash == crypt(pass,salt))
-	{
-		printf("%s\n", pass);
-	}
 	
-	
-	printf("\n");
 
-	//Print out cracked password
-	printf("%s\n", pass);
-
-	return 0;
+	return 1;
 }
+
