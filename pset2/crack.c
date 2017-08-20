@@ -24,48 +24,131 @@ int main(int argc, char * argv[]){
 	salt[1] = hash[1];
 
 	printf("%s\n\n", salt);
+	
 
 
 
-
+	/*
+	printf("1 CHARACTER\n");
 	for(int a = 'A'; a < 91; a++)
 	{
-		pass[3] = a;
-			
-		for(int b = 64; b < 91; b++) 	
-		{	
-			if(b == 64)
-				;
-			else
-				pass[2] = b;
+
+		pass[0] = a;	
+		printf("%s\n", pass);
 
 
+	}
+	
 
-			for(int c = 64; c < 91; c++)
+	printf("2 CHARACTERS\n");
+	for(int a = 'A'; a < 91; a++)
+	{
+		for(int b = 'A'; b < 91; b++)
+		{
+
+			pass[0] = a;	
+			pass[1] = b;
+
+			printf("%s\n", pass);
+
+
+		}
+	}
+
+
+	printf("3 CHARACTERS\n");
+	for(int a = 'A'; a < 91; a++)
+	{
+		for(int b = 'A'; b < 91; b++)
+		{
+			for(int c = 'A'; c < 91; c++)
 			{
-				if(b == 64)
-					;
-				else	
-					pass[1] = c;
-				
-				for(int d = 64; d < 91; d++)
-				{
 
-					if(b == 64)
-						;
-					else
-						pass[0] = d;
-					printf("%s\n",pass);
+				pass[0] = a;	
+				pass[2] = b;
+				pass[1] = c;	
 
-				}	
+				printf("%s\n", pass);
+
+
 			}
 		}
-		
+	}
+	
+
+	printf("4 CHARACTERS\n");
+	for(int a = 'A'; a < 91; a++)
+	{
+		for(int b = 'A'; b < 91; b++)
+		{
+			for(int c = 'A'; c < 91; c++)
+			{
+				for(int d = 'A'; d < 91; d++)
+				{
+
+					pass[0] = a;	
+					pass[3] = b;
+					pass[2] = c;	
+					pass[1]=  d;
+
+					printf("%s\n", pass);
+
+
+				}
+			}
+		}
+	}
+	*/
+
+	
+	printf("4 CHARACTERS\n");
+	for(int a = 'A'; a < 'z' + 1; a++)
+	{
+		for(int b = 64; b < 'z' + 1; b++)
+		{
+			for(int c = 64; c < 'z' + 1; c++)
+			{
+				for(int d = 64; d < 'z' + 1; d++)
+				{
+					
+					pass[0] = a;	
+					
+					if(d == 64)
+						pass[1] = (char) 0;
+					else
+						pass[1] = d;
+					if(c == 64)
+						pass[2] = (char) 0;
+					else
+						pass[2] = c;	
+					if(b == 64)
+						pass[3] = (char) 0; 
+					else
+						pass[3]=  b;
+
+					printf("%s\n", pass);
+					
+					printf("G.HASH: %s\n", hash);
+					printf("U.HASH: %s\n", crypt(pass,salt));
+									
+					//If given hash matches generated hash
+					if (hash == crypt(pass,salt))
+					{
+						printf("YOUR PASSWORD!");
+						return 0;
+					}
+	
+
+
+
+				}
+			}
+		}
 	}
 
 
 
-	
+
 	//If given hash matches generated hash
 	if (hash == crypt(pass,salt))
 	{
