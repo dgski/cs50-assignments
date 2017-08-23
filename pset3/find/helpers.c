@@ -4,8 +4,6 @@
  * Helper functions for Problem Set 3.
  */
  
-#include <cs50.h>
-
 #include "helpers.h"
 
 /**
@@ -13,8 +11,24 @@
  */
 bool search(int value, int values[], int n)
 {
-    // TODO: implement a searching algorithm
-    return false;
+        //Return false if n is non-positive
+        if(n < 0)
+            return false;
+
+        //Get index of center of array
+    	int middle = n / 2;   
+    	
+        if(values[middle] == value)
+            return true;
+
+        if(values[middle] > value)
+            return false; //top half of array
+
+        if(values[middle] < value)
+            return false; //botton half of array
+        
+      
+        return false;
 }
 
 /**

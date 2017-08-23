@@ -15,7 +15,7 @@
 // maximum amount of hay
 const int MAX = 65536;
 
-int main(int argc, string argv[])
+int main(int argc, char* argv[])
 {
     // ensure proper usage
     if (argc != 2)
@@ -37,20 +37,17 @@ int main(int argc, string argv[])
         printf("\nhaystack[%i] = ", size);
         
 	//Memory for user input
-	char* input = malloc(4);
-	fgets(input, 4, stdin);	
-	
-	printf("INT input: %d\n", atoi(input));
+	char* input = malloc(12);
+	fgets(input, 12, stdin);	
 
-
-	int straw = atoi(input);
-	free(input);	
-		
-	if (straw == 0)
+	//Check if escape character has been used	
+	if (input[0] == 0)
         {
             break;
         }
-     
+
+	int straw = atoi(input);
+		
         // add hay to stack
         haystack[size] = straw;
     }
