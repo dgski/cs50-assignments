@@ -9,7 +9,7 @@
        
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include "helpers.h"
 
 // maximum amount of hay
@@ -30,25 +30,23 @@ int main(int argc, char* argv[])
     // fill haystack
     int size;
     int haystack[MAX];
+    char input[12];  
     for (size = 0; size < MAX; size++)
     {	
+        //Clear input array
+        memset(input, 0, sizeof(input));        
 
         // wait for hay until EOF
         printf("\nhaystack[%i] = ", size);
-        
-	//Memory for user input
-	char* input = malloc(12);
-	fgets(input, 12, stdin);	
+	    fgets(input, 12, stdin);	
 
-	//Check if escape character has been used	
-	if (input[0] == 0)
+	    //Check if escape character has been used	
+	    if (input[0] == 0)
         {
             break;
-	        free(input);
         }
 
 	    int straw = atoi(input);
-	    free(input);
 
         // add hay to stack
         haystack[size] = straw;
