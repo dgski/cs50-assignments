@@ -44,10 +44,12 @@ int main(int argc, char* argv[])
 	if (input[0] == 0)
         {
             break;
+	        free(input);
         }
 
-	int straw = atoi(input);
-		
+	    int straw = atoi(input);
+	    free(input);
+
         // add hay to stack
         haystack[size] = straw;
     }
