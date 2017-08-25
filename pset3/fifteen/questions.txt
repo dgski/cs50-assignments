@@ -1,0 +1,4 @@
+0. The game has defined limits of 3 to 9.
+1. The game board is reprented by a two-dimensional array.
+2. The greet() funciton greets the player.
+3. init, draw, move, won.
