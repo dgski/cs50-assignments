@@ -161,7 +161,22 @@ void greet(void)
  */
 void init(void)
 {
-    // TODO
+    int value  = (d*d) - 1;
+
+    for(int i = 0; i < d; i++)
+    {
+        for(int j = 0; j < d; j++)
+        {
+            if((d % 2 == 0) && (value == 2))
+                board[i][j] = 1;
+            else if((d % 2 == 0) && (value == 1))
+                board[i][j] = 2;
+            else
+                board[i][j] = value;
+             value -= 1;
+        }
+    }
+    
 }
 
 /**
@@ -169,7 +184,20 @@ void init(void)
  */
 void draw(void)
 {
-    // TODO
+    for(int i = 0; i < d; i++)
+    {
+        for(int j = 0; j < d; j++)
+        {
+            if(board[i][j] == 0)
+                printf(" _ ");
+            else if(board[i][j] < 10)
+                printf(" %d ", board[i][j]);
+            else
+                printf("%d ", board[i][j]);
+        }
+
+        printf("\n\n");
+    }
 }
 
 /**
@@ -178,8 +206,57 @@ void draw(void)
  */
 bool move(int tile)
 {
-    // TODO
-    return false;
+    //Deal with too big
+    if( (tile > ((d*d) - 1)) || (tile < 0))
+        return false;
+
+    int tilex;
+    int tiley;
+    //Find tile coordinates
+    for(int i = 0; i < d; i++)
+    {
+        for(int j = 0; j < d; j++)
+        {
+            if((board[i][j]) == tile)
+            {
+                tilex = i;
+                tiley = j;
+            }
+        }
+        
+    }
+    int zerox;
+    int zeroy;
+    //Find zero coordinates
+    for(int x = 0; x < d; x++)
+    {
+        for(int y = 0; y < d; y++)
+        {
+            if((board[x][y]) == 0)
+            {
+                zerox = x;
+                zeroy = y;
+            }
+        }
+    }
+
+    bool movable = false;
+
+    //Check if points are adjecent
+    if( (abs(zerox-tilex) == 1) && (zeroy == tiley) )
+       movable = true; 
+        
+    
+    if( (abs(zeroy-tiley) == 1) && (zerox == tilex) )
+       movable = true; 
+        
+    
+    if(movable){
+        board[zerox][zeroy] = tile;
+        board[tilex][tiley] = 0;
+    }
+
+    return movable;;
 }
 
 /**
@@ -188,6 +265,20 @@ bool move(int tile)
  */
 bool won(void)
 {
-    // TODO
-    return false;
+    int winner = 1;
+    
+    
+    for(int i = 0; i < d; i++)
+    {
+        for(int j = 0; j < d; j++)
+        {
+            if((board[i][j]) != winner)
+                return false;
+            winner++;
+        }
+
+    }
+
+    return true;
+    
 }
