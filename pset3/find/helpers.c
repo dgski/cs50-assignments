@@ -14,7 +14,7 @@ bool bin_search(int value, int values[], int s, int e)
 {   
     
     //Array size 0 - Not in list
-    if(e - s == 0)
+    if(e <= s)
         return false;
     
     //Find midpoint
