@@ -11,3 +11,6 @@ A collection of assignments done as part of the CS50 course. The C assignments a
 * **Initials** -  Given the input of a name, program prints out the corresponding initials.
 * **Vigenere** - Takes a commandline argument as a key and then encrypts an input using the Vigenere cypher.
 * **Crack** - Incredibly rudimentary 4 alpha character password cracker which simply genetates passwords and compares hashes.
+
+### Problem Set 2
+* **Find** -  Implements Counting Sort and Binary Search to find a given value in an array.
