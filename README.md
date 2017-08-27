@@ -14,3 +14,4 @@ A collection of assignments done as part of the CS50 course. The C assignments a
 
 ### Problem Set 2
 * **Find** -  Implements Counting Sort and Binary Search to find a given value in an array.
+* **Fifteen** - Implements the [15 puzzle](https://en.wikipedia.org/wiki/15_puzzle).
