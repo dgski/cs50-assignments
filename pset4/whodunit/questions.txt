@@ -1,0 +1,12 @@
+1. stdint.h is a standard C library included to define fixed int data widths regardless of platform.
+2. The point is to have datatypes of predictable sizes, regardless of platform.
+3. BYTE is 1 byte, DWORD is 4 bytes, LONG is 4 bytes and WORD is 2 bytes.  
+4. The first two bytes of any BMP file must be 'BM'.
+5.  The diffence between bfSize and biSize is :
+6.  TODO
+7.  TODO
+8.  TODO
+9.  TODO
+10. TODO
+11. TODO
+12. TODO
