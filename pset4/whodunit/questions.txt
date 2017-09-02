@@ -1,12 +1,12 @@
-1. stdint.h is a standard C library included to define fixed int data widths regardless of platform.
-2. The point is to have datatypes of predictable sizes, regardless of platform.
-3. BYTE is 1 byte, DWORD is 4 bytes, LONG is 4 bytes and WORD is 2 bytes.  
-4. The first two bytes of any BMP file must be 'BM'.
-5.  The diffence between bfSize and biSize is :
-6.  TODO
-7.  TODO
-8.  TODO
-9.  TODO
-10. TODO
-11. TODO
-12. TODO
+1.  stdint.h is a standard C library included to define fixed int data widths regardless of platform.
+2.  The point is to have datatypes of predictable sizes, regardless of platform.
+3.  BYTE is 1 byte, DWORD is 4 bytes, LONG is 4 bytes and WORD is 2 bytes.  
+4.  The first two bytes of any BMP file must be 'BM'.
+5.  The diffence between bfSize and biSize is : bfSize refers to the size of the bitmap file and biSize refers to the number of bytes required by the bitmap info header.
+6.  If biHeight is negative, then the bitmap is a topdown DIB, and the orgin is in the upper-left corner. Otherwise, if it is positive, then it is a bottom-up DIB and its orgin is in the lower left corner.
+7.  The field that specifies the BMP's color depth, in BITMAPINFOHEADER, is biBitCount.
+8.  fopen might return NULL in lines 24 and 32 of copy.c because the user might specify a filename of a file that does not exist.
+9.  Because we want to read in one element of the specify size at a time.
+10. Copy.c assigns a value of '3' to padding if bi.biWidth is 3.
+11. fseek moves the 'cursor' pointer to a specific part of a file.
+12. SEEK_CUR refers to the current position of the file pointer.
