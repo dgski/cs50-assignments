@@ -12,6 +12,9 @@ A collection of assignments done as part of the CS50 course. The C assignments a
 * **Vigenere** - Takes a commandline argument as a key and then encrypts an input using the Vigenere cypher.
 * **Crack** - Incredibly rudimentary 4 alpha character password cracker which simply genetates passwords and compares hashes.
 
-### Problem Set 2
+### Problem Set 3
 * **Find** -  Implements Counting Sort and Binary Search to find a given value in an array.
 * **Fifteen** - Implements the [15 puzzle](https://en.wikipedia.org/wiki/15_puzzle).
+
+### Problem Set 4
+* **Whodunit** - Iterates over a bitmap file, changes all red pixels to white ones, in order to discover the hidden message.
