@@ -65,8 +65,10 @@ int main(int argc, char *argv[])
 
 
     // write outfile's BITMAPFILEHEADER
-    bf.bfSize = 14 + bi.biSize + bi.biSizeImage;
-    fwrite(&bf, 14, 1, outptr);
+    
+    bi.biSizeImage = ((bi.biWidth * factor) * (bi.biHeight * factor)) * 3;
+    bf.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bi.biSizeImage;
+    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
 
     //Save original dimensions
     LONG orgWidth = bi.biWidth;
@@ -75,8 +77,7 @@ int main(int argc, char *argv[])
     // write outfile's BITMAPINFOHEADER
     bi.biWidth = (bi.biWidth * factor);
     bi.biHeight = (bi.biHeight * factor);
-    bi.biSizeImage = ((bi.biWidth * factor) * (bi.biHeight * factor)) * 3;
-    fwrite(&bi, bi.biSize, 1, outptr);
+    fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // determine padding for scanlines
     int padding = (4 - (orgWidth * sizeof(RGBTRIPLE)) % 4) % 4;
@@ -85,23 +86,35 @@ int main(int argc, char *argv[])
     for (int i = 0, biHeight = abs(orgHeight); i < biHeight; i++)
     {
         // iterate over pixels in scanline
-        for (int j = 0; j < orgWidth; j++)
+        for (int j = 0; j < orgWidth * factor; j++)
         {
+            printf("J = %d\n", j);
             // temporary storage
             RGBTRIPLE triple;
 
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
 
-            // write RGB triple to outfile
+            // write RGB triple to outfile, factor number of times
             for(int i = 0; i < factor; i++)   
                 fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
         
-            fseek(inptr, -(orgWidth * sizeof(RGBTRIPLE)), SEEK_CUR);
-        
+
+            printf("j + orgWidth = %d, orgWidth * factor = %f\n", j + orgWidth, orgWidth * factor);
+            //Go to beginning of line if not last entry
+            if( (factor > 1) && (j + orgWidth) < (orgWidth * factor) )
+            {
+               printf("seeking back\n");
+                fseek(inptr, -orgWidth, SEEK_CUR);
+            }
+            else
+            {
+                printf("moving on to next line\n");
+            }
+            
         }
 
-        fseek(inptr, (orgWidth * sizeof(RGBTRIPLE)), SEEK_CUR);
+
         
         
         // skip over padding, if any
