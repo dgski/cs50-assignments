@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
 
 
     // write outfile's BITMAPFILEHEADER
-    bf.bfSize = sizeof(bf) + bi.biSize + (bi.biSizeImage * factor);
-    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
+    bf.bfSize = 14 + bi.biSize + bi.biSizeImage;
+    fwrite(&bf, 14, 1, outptr);
 
     //Save original dimensions
     LONG orgWidth = bi.biWidth;
@@ -75,8 +75,8 @@ int main(int argc, char *argv[])
     // write outfile's BITMAPINFOHEADER
     bi.biWidth = (bi.biWidth * factor);
     bi.biHeight = (bi.biHeight * factor);
-    bi.biSizeImage = (bi.biSizeImage * factor);
-    fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
+    bi.biSizeImage = ((bi.biWidth * factor) * (bi.biHeight * factor)) * 3;
+    fwrite(&bi, bi.biSize, 1, outptr);
 
     // determine padding for scanlines
     int padding = (4 - (orgWidth * sizeof(RGBTRIPLE)) % 4) % 4;
