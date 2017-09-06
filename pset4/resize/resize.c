@@ -61,22 +61,23 @@ int main(int argc, char *argv[])
 
 
 
-
-
-
-    // write outfile's BITMAPFILEHEADER
     
-    bi.biSizeImage = ((bi.biWidth * factor) * (bi.biHeight * factor)) * 3;
-    bf.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bi.biSizeImage;
-    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
-
     //Save original dimensions
     LONG orgWidth = bi.biWidth;
     LONG orgHeight = bi.biHeight;
-
-    // write outfile's BITMAPINFOHEADER
+    
+    //Create new dimensions
     bi.biWidth = (bi.biWidth * factor);
     bi.biHeight = (bi.biHeight * factor);
+    bi.biSizeImage = ((bi.biWidth * factor) * (bi.biHeight * factor)) * 3;
+   
+    //Create new file size 
+    bf.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bi.biSizeImage;
+
+    // write outfile's BITMAPFILEHEADER 
+    fwrite(&bf, sizeof(BITMAPFILEHEADER), 1, outptr);
+
+    // write outfile's BITMAPINFOHEADER
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // determine padding for scanlines
@@ -85,6 +86,7 @@ int main(int argc, char *argv[])
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(orgHeight); i < biHeight; i++)
     {
+        int counter = 0;
         // iterate over pixels in scanline
         for (int j = 0; j < orgWidth * factor; j++)
         {
@@ -94,18 +96,27 @@ int main(int argc, char *argv[])
 
             // read RGB triple from infile
             fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+            printf("READ PIXEL: %d,%d,%d\n", triple.rgbtBlue, triple.rgbtGreen, triple.rgbtRed);
+
+
 
             // write RGB triple to outfile, factor number of times
-            for(int i = 0; i < factor; i++)   
+            for(int i = 0; i < factor; i++)
+            {   
                 fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-        
+                printf("WRITING PIXEL: %d,%d,%d\n", triple.rgbtBlue, triple.rgbtGreen, triple.rgbtRed);
+            }
 
             printf("j + orgWidth = %d, orgWidth * factor = %f\n", j + orgWidth, orgWidth * factor);
+            
+            
+            counter++; 
             //Go to beginning of line if not last entry
-            if( (factor > 1) && (j + orgWidth) < (orgWidth * factor) )
+            if(counter  == (orgWidth) )
             {
                printf("seeking back\n");
-                fseek(inptr, -orgWidth, SEEK_CUR);
+               fseek(inptr, -(orgWidth * sizeof(RGBTRIPLE)), SEEK_CUR);
+               counter = 0;
             }
             else
             {
