@@ -56,20 +56,18 @@ int main(int argc, char *argv[])
         return 4;
     }
 
-
-
-
-
-
-    
     //Save original dimensions
     LONG orgWidth = bi.biWidth;
     LONG orgHeight = bi.biHeight;
-    
+   
     //Create new dimensions
     bi.biWidth = (bi.biWidth * factor);
     bi.biHeight = (bi.biHeight * factor);
-    bi.biSizeImage = ((bi.biWidth * factor) * (bi.biHeight * factor)) * 3;
+   
+    // determine new padding for scanlines
+    int new_padding = (4 - ((bi.biWidth * sizeof(RGBTRIPLE))) % 4) % 4;
+   
+    bi.biSizeImage = (((bi.biWidth * factor)+ new_padding) * (bi.biHeight * factor)) * 3;
    
     //Create new file size 
     bf.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bi.biSizeImage;
@@ -81,61 +79,57 @@ int main(int argc, char *argv[])
     fwrite(&bi, sizeof(BITMAPINFOHEADER), 1, outptr);
 
     // determine padding for scanlines
-    int padding = (4 - (orgWidth * sizeof(RGBTRIPLE)) % 4) % 4;
+    int old_padding = (4 - ((orgWidth * sizeof(RGBTRIPLE))) % 4) % 4;
+    
 
+    if(factor >= 1)
+    {
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(orgHeight); i < biHeight; i++)
     {
-        int counter = 0;
-        // iterate over pixels in scanline
-        for (int j = 0; j < orgWidth * factor; j++)
-        {
-            printf("J = %d\n", j);
-            // temporary storage
-            RGBTRIPLE triple;
-
-            // read RGB triple from infile
-            fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
-            printf("READ PIXEL: %d,%d,%d\n", triple.rgbtBlue, triple.rgbtGreen, triple.rgbtRed);
-
-
-
-            // write RGB triple to outfile, factor number of times
-            for(int i = 0; i < factor; i++)
-            {   
-                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
-                printf("WRITING PIXEL: %d,%d,%d\n", triple.rgbtBlue, triple.rgbtGreen, triple.rgbtRed);
-            }
-
-            printf("j + orgWidth = %d, orgWidth * factor = %f\n", j + orgWidth, orgWidth * factor);
-            
-            
-            counter++; 
-            //Go to beginning of line if not last entry
-            if(counter  == (orgWidth) )
-            {
-               printf("seeking back\n");
-               fseek(inptr, -(orgWidth * sizeof(RGBTRIPLE)), SEEK_CUR);
-               counter = 0;
-            }
-            else
-            {
-                printf("moving on to next line\n");
-            }
-            
-        }
-
-
         
         
-        // skip over padding, if any
-        fseek(inptr, padding, SEEK_CUR);
-
-        // then add it back (to demonstrate how)
-        for (int k = 0; k < padding; k++)
+        for(int z = 0; z < factor; z++)
         {
-            fputc(0x00, outptr);
+
+            // iterate over pixels in scanline
+            for (int j = 0; j < orgWidth; j++)
+            {
+                // temporary storage
+                RGBTRIPLE triple;
+
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+
+                // write RGB triple to outfile, factor number of times
+                for(int i = 0; i < factor; i++)
+                {   
+                    fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+                }
+            }    
+                //Insert new padding into new file
+                for (int k = 0; k < new_padding; k++)
+                {
+                    fputc(0x00, outptr);
+                }    
+            
+            //If this is not the last replication - go back to beginning of infile line 
+            if(z != (factor - 1))
+                fseek(inptr, -(orgWidth * sizeof(RGBTRIPLE)), SEEK_CUR);
         }
+        // skip over old padding, if any
+        fseek(inptr, old_padding, SEEK_CUR);
+
+    }
+    }
+
+    else
+    {
+        
+
+
+
+
     }
 
     // close infile
