@@ -4,7 +4,7 @@
        
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <math.h>
 #include "bmp.h"
 
 int main(int argc, char *argv[])
@@ -61,13 +61,13 @@ int main(int argc, char *argv[])
     LONG orgHeight = bi.biHeight;
    
     //Create new dimensions
-    bi.biWidth = (bi.biWidth * factor);
-    bi.biHeight = (bi.biHeight * factor);
+    bi.biWidth = round(bi.biWidth * factor);
+    bi.biHeight = round(bi.biHeight * factor);
    
     // determine new padding for scanlines
     int new_padding = (4 - ((bi.biWidth * sizeof(RGBTRIPLE))) % 4) % 4;
    
-    bi.biSizeImage = (((bi.biWidth * factor)+ new_padding) * (bi.biHeight * factor)) * 3;
+    bi.biSizeImage = (((bi.biWidth)+ new_padding) * (bi.biHeight)) * 3;
    
     //Create new file size 
     bf.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + bi.biSizeImage;
@@ -82,8 +82,10 @@ int main(int argc, char *argv[])
     int old_padding = (4 - ((orgWidth * sizeof(RGBTRIPLE))) % 4) % 4;
     
 
-    if(factor >= 1)
+    if(factor < 1)
     {
+
+    }
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(orgHeight); i < biHeight; i++)
     {
@@ -121,16 +123,7 @@ int main(int argc, char *argv[])
         fseek(inptr, old_padding, SEEK_CUR);
 
     }
-    }
-
-    else
-    {
-        
-
-
-
-
-    }
+    
 
     // close infile
     fclose(inptr);
