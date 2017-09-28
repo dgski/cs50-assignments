@@ -69,7 +69,9 @@ int main(int argc, char* argv[])
          (buffer[2] == (char)0xff) &&
          (is_bit_set(buffer[3],7)) && 
          (is_bit_set(buffer[3],6)) &&
-         (is_bit_set(buffer[3],6))))
+         (is_bit_set(buffer[3],5)) &&
+         (!is_bit_set(buffer[3],4))
+         ))
        {
            
            //If file open close it 
