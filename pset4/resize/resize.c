@@ -84,8 +84,47 @@ int main(int argc, char *argv[])
 
     if(factor < 1)
     {
+     
+    for (int i = 0, biHeight = fabs(round((orgHeight * factor))); i < biHeight; i++)
+    {
+
+            // iterate over pixels in scanline
+            for (int j = 0; j < round(orgWidth * factor); j++)
+            {
+                // temporary storage
+                RGBTRIPLE triple;
+
+                // read RGB triple from infile
+                fread(&triple, sizeof(RGBTRIPLE), 1, inptr);
+
+                // write RGB triple to outfile, factor number of times
+                fwrite(&triple, sizeof(RGBTRIPLE), 1, outptr);
+            
+                //Skip the next pixel
+                for (int z = 0; z < (round(1/factor) - 1); z++)
+                    fseek(inptr, sizeof(RGBTRIPLE), SEEK_CUR);
+            
+            }
+
+            //Insert new padding into new file
+                for (int k = 0; k < new_padding; k++)
+                {
+                    fputc(0x00, outptr);
+                }    
+
+        // skip over old padding, if any
+        fseek(inptr, old_padding, SEEK_CUR);
+
+        //Skip the next line
+        for( int z = 0; z < (round(1/factor) - 1); z++)
+            fseek(inptr, (sizeof(RGBTRIPLE) * (old_padding + orgWidth)), SEEK_CUR);
 
     }
+    
+
+    }
+    else
+    {
     // iterate over infile's scanlines
     for (int i = 0, biHeight = abs(orgHeight); i < biHeight; i++)
     {
@@ -123,7 +162,7 @@ int main(int argc, char *argv[])
         fseek(inptr, old_padding, SEEK_CUR);
 
     }
-    
+    }
 
     // close infile
     fclose(inptr);
