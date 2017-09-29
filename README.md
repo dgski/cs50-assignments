@@ -18,3 +18,6 @@ A collection of assignments done as part of the CS50 course. The C assignments a
 
 ### Problem Set 4
 * **Whodunit** - Iterates over a bitmap file, changes all red pixels to white ones, in order to discover the hidden message.
+* **Resize** - Takes an input bitmap, and a float as a parameters, and creates a new bitmap scaled in dimensions by the float value.
+* **Recover** - Can look over a raw binary dump of data, finding and extracting block-aligned jpeg images. Used for recovery.
+
