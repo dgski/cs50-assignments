@@ -1,0 +1,7 @@
+0.  It is the longest word in the english language; A synonym for silicosis. Silicosis is a form of lung disease suffered by people who get inhale small particles such as stone fragments at work.
+1.  Gets the usage information about the a given process.
+2.  There are sixteen member variables.
+3.  You pass those by reference as to save memory. Bigger structures would be copied for the new functions and would make the program slower. This is especially important when it comes to this assignment.   
+4.  First main() creates a file pointer. Then if uses fopen() to open the textfile provided in read mode and intialized the file pointer. If cannot open then it returns 1. Now, it creates variables to represent the various statistics, and a character array large enough to for the largest words + one for the termination character. Now it gets one character at a time, adding to the word array until it reaches a character that is not alphabetical or an apostrophy. It ignores words completely with numbers. Then it terminates the current working word array, updates the word counter, calls the check command. If check returns false, then the mispelled counter is iterated. This repeats till it reaches the end of the file. Then the file is closed.
+5. You use fgetc to ensure that you do not read words that are larger than the limited sized word array and to filter out words with numbers on the fly.
+6.  So that those values can't be changed in those functions. Other wise the functions could change the word or the dictionary file. It's safer for everyone.
