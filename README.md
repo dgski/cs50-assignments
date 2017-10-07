@@ -21,3 +21,5 @@ A collection of assignments done as part of the CS50 course. The C assignments a
 * **Resize** - Takes an input bitmap, and a float as a parameters, and creates a new bitmap scaled in dimensions by the float value.
 * **Recover** - Can look over a raw binary dump of data, finding and extracting block-aligned jpeg images. Used for recovery.
 
+### Problem Set 5
+* **Speller** - Implements a spell checking program. Two versions: chained hash table, and trie.
