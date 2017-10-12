@@ -46,7 +46,10 @@ long long LugnsAlgo(char* input){
 		free(data);
 	}
 	for(int i = 0; i < strlen(doubled); i++)
-		sum1 += doubled[i] - '0';
+    {
+        printf("%c\n", doubled[i]);
+        sum1 += doubled[i] - '0';
+    }
 
 	//Sum of starting at last one
 	long long  sum2 = 0;
@@ -54,7 +57,11 @@ long long LugnsAlgo(char* input){
 	{	
 		sum2 += (input[i] -  '0');
 	}
-	
+
+    //printf("%lld", sum1);
+    //printf("%lld", sum2);
+
+
 	free(doubled);
 	return sum1 + sum2;
 }
