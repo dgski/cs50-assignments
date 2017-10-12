@@ -23,3 +23,9 @@ A collection of assignments done as part of the CS50 course. The C assignments a
 
 ### Problem Set 5
 * **Speller** - Implements a spell checking program. Two versions: chained hash table, and trie.
+
+### Problem Set 6
+* **Mario.py** - Re-implementation of Mario from pset1 using Python.
+* **Credit.py** - Re-implementation of Credit from pset1 using Python. Features list comprehension.
+* **Crack.py** - Re-implementation of Crack from pset2 using Python. Features list comprehension.
+* **Sentiments** - Implements necessary python programs to analyze tweets, rate for sentiment, and allow usage through simple web application.
