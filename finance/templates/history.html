@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+
+    <table id = "index" class = "table table-striped">
+
+        <thead>
+            <th>Date/Time</th>
+            <th>Stock Quote</th>
+            <th>Transaction Type</th>
+            <th>Number of Shares</th>
+            <th>Price per Share</th>
+
+        </thead>
+
+        {% for trans in transactions %}
+        <tr>
+            <td>{{trans["datetime"]}}</td>
+            <td>{{trans["stock"]}}</td>
+            <td>{{trans["type"]}}</td>
+            <td>{{trans["quantity"]}}</td>
+            <td>{{trans["price"]}}</td>
+
+        </tr>
+        {% endfor %}
+
+    </table>
+
+
+
+{% endblock %}

@@ -1,0 +1,66 @@
+.container
+{
+    /* center contents */
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+
+main .form-control
+{
+    /* center form controls */
+    display: inline-block;
+
+    /* override Bootstrap's 100% width for form controls */
+    width: auto;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+main td
+{
+    /* left-align tables' cells */
+    padding: 5px;
+    text-align: left;
+}
+
+/*
+#index
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: right;
+    border-width: 1px;
+    border-right-width: 0px;
+    border-color: lightgrey;
+    border-style: solid;
+    border-bottom-width: 0px;
+}*/
+
+
+#table_headings
+{
+    background-color: white;
+    /*color: white;*/
+    font-weight: bold;
+    border-bottom-width: 2px;
+    border-bottom-color: black;
+    border-bottom-style: solid;
+    border-top-width: 0px;
+}
+
+#alter_quan
+{
+    width: 150px;
+}
+
+#bottom_row
+{
+    background-color: white;
+}

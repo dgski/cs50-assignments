@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('index') }}" method="post">
+    <table id = "index" class = "table table-striped">
+
+        <thead = "table_headings">
+            <th>Stock Quote</th>
+            <th># of Shares</th>
+            <th>Current Price</th>
+            <th>Total Value</th>
+            <th>Modify Holdings</th>
+
+        </thead>
+
+        {% for i in holdings %}
+        <tr id="right_row">
+            <td>{{holdings[i].quote}}</td>
+            <td>{{holdings[i].num_of_shares}}</td>
+            <td>{{holdings[i].str_price()}}</td>
+            <td>{{holdings[i].str_tot()}}</td>
+            <td>
+
+            <input id="alter_quan" class="form-control" name={{holdings[i].quote}} placeholder="Buy/Sell Units" type="number"/>
+
+            </td>
+        </tr>
+        {% endfor %}
+
+
+
+        <tr>
+            <td>Cash Holdings</td>
+            <td> - </td>
+            <td> - </td>
+            <td>{{curr_cash}}</td>
+            <td> - </td>
+        </tr>
+
+        <tr id="bottom_row">
+            <td></td>
+            <td></td>
+            <td>Grand Total:</td>
+            <td id =>{{grand_total}}</td>
+            <td id>
+
+             <button id="alter_quan" class="btn btn-default" type="submit">Update</button>
+
+            </td>
+        </tr>
+
+    </table>
+     </form>
+
+
+{% endblock %}

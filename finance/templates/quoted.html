@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{name}}
+{% endblock %}
+
+{% block main %}
+    <h1>
+        {{name}}
+    </h1>
+    <p>
+       {{symbol}} ......................................................... <b>${{price}}</b>
+    </p>
+{% endblock %}
